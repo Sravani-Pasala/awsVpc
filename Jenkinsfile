@@ -19,6 +19,15 @@ terraform apply'''
         echo 'Waking up'
       }
     }
+    stage('InSpec Tests') {
+      steps {
+        echo 'Testing with InSpec'
+        sh '''cp -f /var/lib/jenkins/inspecTests/test.rb test.rb
+sudo inspec exec test.rb -t ssh://ec2-user@`terraform output privateVMip` -i /home/ec2-user/.ssh/id_rsa'''
+        sh 'sudo inspec exec test.rb -t ssh://ec2-user@`terraform output protectedVMip` -i /home/ec2-user/.ssh/id_rsa'
+        sh 'sudo inspec exec test.rb -t ssh://ec2-user@`terraform output publicVMip` -i /home/ec2-user/.ssh/id_rsa'
+      }
+    }
     stage('Destroy') {
       steps {
         echo 'Destroying'
