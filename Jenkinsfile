@@ -12,10 +12,10 @@ terraform plan
 terraform apply'''
       }
     }
-    stage('Sleep 5 min') {
+    stage('Sleep 10 min') {
       steps {
         echo 'Sleeping'
-        sleep(time: 5, unit: 'MINUTES')
+        sleep(time: 10, unit: 'MINUTES')
         echo 'Waking up'
       }
     }
